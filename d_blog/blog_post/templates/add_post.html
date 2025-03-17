@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Create blog</title>
+{% endblock %}
+
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <h1>Add Post Here!</h1>
+    <br
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
+                <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Post</button>
+            </form>
+        </div>
+{% else %}
+Don't be that guy, do the right thing.
+
+{% endif %}
+
+
+
+{% endblock %}

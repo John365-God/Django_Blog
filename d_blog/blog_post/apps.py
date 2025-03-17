@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class BloggersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'bloggers'
+    name = 'blog_post'
