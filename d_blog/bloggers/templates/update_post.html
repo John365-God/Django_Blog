@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Edit blog</title>
+{% endblock %}
+
+
+{% block body %}
+    <h1>Edit Here!</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <a href="{% url 'delete' post.pk %}"  class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Delete</a>
+            <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Update</button>
+            <button href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</button>
+        </form>
+{% endblock %}

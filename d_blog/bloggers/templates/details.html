@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>{{ post.title }}</title>
+{% endblock %}
+
+
+
+{% block body %}
+    <h1>{{ post.title }}</h1>
+    <small>By: {{ post.author }} {{post.created_at}}</small>
+    <hr>
+    <p>{{post.content}}</p>
+
+    <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Back</a>
+{% endblock %}

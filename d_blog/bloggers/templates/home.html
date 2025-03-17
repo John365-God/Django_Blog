@@ -7,6 +7,14 @@
 {% block body %}
 
     <h1>Welcome</h1>
+    <a href="{% url 'login_blogger' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Login</a>
 
+    <ul>
+    {% for post in object_list %}
+        <li> <a href="{% url 'details' post.pk %}" >{{post.title}} - {{post.author}}</a>
+            <a href="{% url 'update' post.pk %}" >Edit</a> <a href="{% url 'delete' post.pk %}" >Delete</a> </li>
 
+       <li> {{post.content}} </li>
+    {% endfor %}
+    </ul>
 {% endblock%}

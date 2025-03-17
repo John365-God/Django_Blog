@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %}
+    <title>Delete blog</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Delete this Blog</h1>
+<h3>{{post.title}}</h3>
+<br>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            <strong>Delete post? </strong>
+            <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Yes</button>
+
+             <a class="btn" href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">No</a>
+         </form>
+
+    </div>
+{% endblock %}
