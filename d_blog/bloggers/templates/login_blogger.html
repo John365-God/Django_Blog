@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+
+
+{% block body %}
+<!--CSS to handle the centering of the whole form-->
+<style>
+    .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+        width: 100vw;  /* Full viewport width */
+
+    .form-control:focus {
+        box-shadow: none;        /* Removes glow/shadow */
+        border-color: #a8e6a3; /* No border change on focus */
+
+    }
+</style>
+
+
+<div class="centered-container">
+    <div class="d-flex flex-column align-items-center">
+    <!--  Login Header -->
+    <h1 class="text-center mb-4" style="color:olive">Login</h1>
+    <!-- To handle the verification and submitting the forms -->
+        <form action="{%url 'login_blogger' %}" method="POST" class="glow-form p-4 rounded" onsubmit="return validateForm()">
+    <!-- To give a message when there's an error login in-->
+        {% csrf_token %}
+
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+
+            {% endfor %}
+        {% endif %}
+
+    <!-- Inputs, the input-group is if for the icons beside the inputs -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text">
+            <i class="bi bi-person"></i>
+        </span>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus >
+    </div>
+
+    <div class="mb-3 input-group">
+        <span class="input-group-text">
+            <i class="bi bi-lock"></i>
+        </span>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" >
+    </div>
+
+
+    <!-- The register link -->
+    <a href="{% url 'register' %}" class="text-decoration-none mb-3 d-block text-center" style="color: #28a745">Register here!</a>
+
+    <!-- A class for the centering the buttons below the form-->
+    <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn" style="background-color: #28a745; color: #f0f0f0;">Log in</button>
+        <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
+
+    </div>
+    </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
