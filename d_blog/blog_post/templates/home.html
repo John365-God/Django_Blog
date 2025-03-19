@@ -5,14 +5,23 @@
 {% endblock %}
 
 {% block body %}
-
+{% for message in messages %}
+    {% if message %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    {% endif %}
+{% endfor %}
     <h1>Welcome</h1>
 
     <ul>
     {% for post in object_list %}
         <li> <a href="{% url 'details' post.pk %}" >{{post.title}} - {{post.author}}</a>
             {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
             <a href="{% url 'update' post.pk %}" >Edit</a> <a href="{% url 'delete' post.pk %}" >Delete</a> </li>
+                {% endif %}
             {% endif %}
        <li> {{post.content| slice:"200"}} </li>
     {% endfor %}

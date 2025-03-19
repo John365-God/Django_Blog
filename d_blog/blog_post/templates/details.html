@@ -7,10 +7,14 @@
 
 
 {% block body %}
-    <h1>{{ post.title }}</h1>
-    <small>By: {{ post.author }} {{post.created_at}}</small>
+
+    <h1>{{ post.title }}  </h1>
+    <small>Posted By: {{ post.author }} </small> <br>
+    <small> Created at:{{post.created_at}}</small>
     <hr>
     <p>{{post.content}}</p>
-
+    {% if post.updated_at and post.updated_at > post.created_at %}
+        <small>Updated at: {{post.updated_at}}</small>
+    {% endif %}
     <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Back</a>
 {% endblock %}

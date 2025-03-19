@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import Home, Details, AddPost,UpdatePost,DeletePost
 
+
 urlpatterns = [
     path('', Home.as_view(), name="blogger_home"),
     path("article/<int:pk>/",Details.as_view(), name='details'),

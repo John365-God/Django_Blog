@@ -7,15 +7,27 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-        <h1>Edit Here!</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <a href="{% url 'delete' post.pk %}"  class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Delete</a>
-            <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Update</button>
-            <button href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</button>
-        </form>
+        {% if user.id == post.author.id %}
+
+            <h1>Edit Here!</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <!-- Delete button (Anchor tag for proper link) -->
+                <a href="{% url 'delete' post.pk %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Delete</a>
+
+                <!-- Update button (Submit the form) -->
+                <button type="submit" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Update</button>
+
+                <!-- Cancel button (Anchor tag for redirection) -->
+                <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
+            </form>
+
+        {% else %}
+            <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+        {% endif %}
     {% else %}
-Don't be that guy, do the right thing.
+        <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
     {% endif %}
 {% endblock %}

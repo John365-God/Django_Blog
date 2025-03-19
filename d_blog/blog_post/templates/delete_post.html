@@ -3,20 +3,29 @@
     <title>Delete blog</title>
 {% endblock %}
 
-
 {% block body %}
-<h1>Delete this Blog</h1>
-<h3>{{post.title}}</h3>
-<br>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
 
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            <strong>Delete post? </strong>
-            <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Yes</button>
+            <h1>Delete this Blog</h1>
+            <h3>{{ post.title }}</h3>
+            <br>
 
-             <a class="btn" href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">No</a>
-         </form>
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <strong>Delete post? </strong>
+                    <button type="submit" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Yes</button>
 
-    </div>
+                    <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">No</a>
+                </form>
+            </div>
+
+        {% else %}
+            <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+        {% endif %}
+    {% else %}
+        <p>Please log in to manage your blog. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+    {% endif %}
 {% endblock %}
+
