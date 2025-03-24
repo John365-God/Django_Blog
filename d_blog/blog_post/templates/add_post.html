@@ -17,9 +17,11 @@
                 <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Post</button>
             </form>
         </div>
-    <script>
-        var name
-    </script>
+ <script>
+    var name = "{{ user.id }}";
+    document.getElementById("editor").value = name;
+</script>
+
 {% else %}
 Don't be that guy, do the right thing.
 

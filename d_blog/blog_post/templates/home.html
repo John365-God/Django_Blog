@@ -1,29 +1,105 @@
-{% extends 'layout.html'%}
+{% extends 'layout.html' %}
 
 {% block title %}
     <title>Homepage</title>
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-    {% if message %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-    {% endif %}
-{% endfor %}
-    <h1>Welcome</h1>
+<div class="container mt-1">
 
-    <ul>
-    {% for post in object_list %}
-        <li> <a href="{% url 'details' post.pk %}" >{{post.title}} - {{post.author}}</a>
-            {% if user.is_authenticated %}
-                {% if user.id == post.author.id %}
-            <a href="{% url 'update' post.pk %}" >Edit</a> <a href="{% url 'delete' post.pk %}" >Delete</a> </li>
-                {% endif %}
-            {% endif %}
-       <li> {{post.content| slice:"200"}} </li>
+    <!-- Flash Messages -->
+    {% for message in messages %}
+        {% if message %}
+            <div class="alert alert-dark alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
     {% endfor %}
-    </ul>
-{% endblock%}
+
+    <!-- 🌟 Hero Section without Animation -->
+    {% if page_obj.number == 1 %}
+    <div class="hero-section container-fluid d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #000;">
+        <div class="text-center text-white">
+            <h1 class="fw-bold d-inline">Welcome to D-blog</h1>
+            <br><br>
+            <a href="javascript:void(0)" id="scrollToBlogButton" onclick="scrollToBlog()" class="text-light text-decoration-none ms-2" style="font-size: 1rem; cursor: pointer;">
+                Check out our Blogs <i class="bi bi-arrow-down-circle"></i>
+            </a>
+        </div>
+    </div>
+
+<!-- Latest Posts Section (only visible on the first page) -->
+<h3 class="mt-5 mb-3 text-center">Latest Articles</h3>
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center" id="blog-section">
+    {% for post in object_list|slice:"0:6" %}  <!-- This ensures we only show 6 posts -->
+    <div class="col mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-3 bg-light d-flex flex-column">
+            <div class="card-body d-flex flex-column justify-content-between text-center">
+                <!-- Centered Title and Text -->
+                <h5 class="card-title text-dark">{{ post.title|slice:"0:40" }}...</h5>
+                <p class="card-text flex-grow-1">{{ post.content|slice:"0:45" }}...</p>
+                <small class="fs-7 text-muted">By {{ post.author }} | {{ post.created_at|date }}</small>
+            </div>
+            <div class="card-footer text-center d-flex justify-content-between">
+                <!-- Always show the 'Read More' button -->
+                <a href="{% url 'details' post.pk %}" class="btn btn-outline-dark btn-sm w-100 mx-1"> Read </a>
+
+                {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                        <!-- Edit and Delete buttons only show for the author -->
+                        <a href="{% url 'update' post.pk %}" class="btn btn-outline-secondary btn-sm w-100 mx-1">Edit</a>
+                        <a href="{% url 'delete' post.pk %}" class="btn btn-outline-danger btn-sm w-100 mx-1">Delete</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+    <!-- Pagination -->
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link bg-white text-dark" href="?page=1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-white text-dark" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <a class="page-link bg-dark text-white" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link bg-white text-dark" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link bg-white text-dark" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-white text-dark" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- Scroll to Top Button (Invisible at first) -->
+<button id="scrollToTopButton" class="btn position-fixed bottom-0 end-0 m-3 p-3 text-white bg-black border-0" onclick="scrollToTop()" style="display:none; z-index: 100; border-radius: 50%; padding: 1px;">
+    <i class="bi bi-arrow-up-circle" style="font-size: 1.5rem;"></i>
+</button>
+
+{% endblock %}

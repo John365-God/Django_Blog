@@ -4,22 +4,21 @@
     <title>Login</title>
 {% endblock %}
 
-
 {% block body %}
 
 <div class="container d-flex justify-content-center align-items-center min-vh-10">
-    <form method="POST" style="width: 100%; max-width: 250px;">
+    <form method="POST" class="w-100" style="max-width: 250px;">
 
-    <h1>Log_In</h1>
-<br
+    <h1 class="text-primary">Log_In</h1>
+    <br>
     <div class="form-group">
 
 {% for message in messages %}
     {% if message %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
         {{ message }}
-   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endif %}
 {% endfor %}
 
@@ -27,28 +26,24 @@
 
         <div class="row g-3 align-items-center">
             <div class="col-12">
-                <!-- Username Input with smaller form-control -->
                 <div class="mb-3">
                     <input type="text" class="form-control form-control-sm" name="username" placeholder="Username">
                 </div>
             </div>
 
             <div class="col-12">
-                <!-- Password Input with smaller form-control -->
                 <div class="mb-3">
                     <input type="password" class="form-control form-control-sm" name="password" placeholder="Password">
-                    <p>Not a blogger? <a href="{% url 'register' %}"  style="background-color: transparent; color: #28a745;">Register.</a></p>
+                    <p>Not a blogger? <a href="{% url 'register' %}" class="text-primary">Register.</a></p>
                 </div>
             </div>
 
             <div class="col-12 text-center">
-                <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary">Log In</button>
             </div>
 
             <div class="col-12 text-center">
-                <!-- Cancel Button with styling -->
-                <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
+                <a href="{% url 'blogger_home' %}" class="btn btn-outline-primary">Cancel</a>
             </div>
         </div>
     </form>

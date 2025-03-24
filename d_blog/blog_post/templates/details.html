@@ -4,17 +4,49 @@
     <title>{{ post.title }}</title>
 {% endblock %}
 
-
-
 {% block body %}
+    <div class="container mt-4">
+        <!-- Post Title -->
+        <h1 class="display-10">{{ post.title }}</h1>
+        <div class="text-muted">
+            <small>Posted by: {{ post.author }} </small><br>
+            <small>{{ post.created_at|date:"F j, Y, g:i a" }}</small>
+        </div>
+        <hr>
 
-    <h1>{{ post.title }}  </h1>
-    <small>Posted By: {{ post.author }} </small> <br>
-    <small> Created at:{{post.created_at}}</small>
-    <hr>
-    <p>{{post.content}}</p>
-    {% if post.updated_at and post.updated_at > post.created_at %}
-        <small>Updated at: {{post.updated_at}}</small>
-    {% endif %}
-    <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Back</a>
+        <!-- Post Content -->
+        <div class="post-content">
+            <p>{{ post.content }}</p>
+
+            {% if post.updated_at and post.updated_at > post.created_at %}
+                <p><small class="text-muted">Last updated on: {{ post.updated_at|date:"F j, Y, g:i a" }}</small></p>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <!-- Comments Section -->
+        <h4 class="mt-4">Comments</h4>
+        {% if not post.comments.all %}
+            <p>No comments yet. Be the first to leave one!</p>
+        {% else %}
+            <div class="comments">
+                {% for comment in post.comments.all %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comment.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ comment.created_at|date:"F j, Y, g:i a" }}</h6>
+                            <p class="card-text">{{ comment.body }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        <hr>
+
+        <!-- Back Button --><a href="{% url 'blogger_home' %}" class="btn btn-outline-primary mt-4">Back to Blog</a>
+
+    </div>
 {% endblock %}

@@ -1,3 +1,101 @@
-h1 {
-     color:red;
+/* 🌍 Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and borders don't affect layout */
+}
+
+body {
+    background-color: #000;  /* Black background */
+    color: #80f;  /* White text for readability */
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif; /* Adjust default font */
+}
+
+/* 🌍 Navbar Styling */
+.navbar {
+    background-color: #000 !important;  /* Black background for the navbar */
+}
+
+.navbar .navbar-brand, .navbar .nav-link {
+    color: #fff !important;  /* White text in the navbar */
+}
+
+.navbar .nav-link:hover {
+    color: #00d4ff;  /* Light blue hover color */
+}
+
+/* 🌟 Hero Section */
+.hero-section {
+    background-color: #000;  /* Black background for the hero section */
+    color: white;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;  /* Full viewport width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;  /* Remove padding to make it take up the full screen */
+}
+
+/* 🌍 Page Content Styling */
+.container {
+    background-color: #000;  /* Black background for the content area */
+    color: white;  /* Ensure text remains visible on the black background */
+    padding: 30px;
+    min-height: 100vh; /* Make sure the content takes up the full screen and can scroll */
+}
+
+/* Featured Post Styling */
+.card {
+    background-color: #333;  /* Dark background for cards */
+    color: white;  /* White text inside cards */
+}
+
+/* Pagination Styling */
+.pagination {
+    background-color: #000;  /* Black background for pagination */
+    color: white;
+}
+
+.pagination .page-item .page-link {
+    color: white;
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #000;
+    color: white;
+}
+
+.pagination .page-item:hover .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #333;
+    color: #888;
+}
+
+/* Ensuring Scrollable Page */
+html, body {
+    height: 100%; /* Ensure the page takes up full height */
+}
+
+/* Back to Top Button */
+#scrollToTopButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    background-color: transparent;
+    border: none;
+}
+
+#scrollToTopButton i {
+    font-size: 2rem;
+    color: #007bff;
 }
