@@ -5,48 +5,53 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <!-- Post Title -->
-        <h1 class="display-10">{{ post.title }}</h1>
+<div class="container mt-4">
+    <!-- Post Title and Metadata -->
+    <div class="text-center mb-4">
+        <h1>{{ post.title }}</h1>
         <div class="text-muted">
-            <small>Posted by: {{ post.author }} </small><br>
-            <small>{{ post.created_at|date:"F j, Y, g:i a" }}</small>
+             <!-- Back Button (Aligned with the title) -->
+            <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-dark position-absolute start-0 top-1 m-3" style="font-size: 1rem; border: none;">
+                <i class="bi bi-arrow-left-circle"></i>
+            </a>
+
+            <small class="text-success">Posted by <strong>{{ post.author }}</strong> on {{ post.created_at|date:"F j, Y, g:i a" }}</small>
         </div>
-        <hr>
+    </div>
 
-        <!-- Post Content -->
-        <div class="post-content">
-            <p>{{ post.content }}</p>
+    <!-- Post Content -->
+    <div class="post-content mb-4">
+        <p>{{ post.content }}</p>
+        {% if post.updated_at and post.updated_at > post.created_at %}
+            <p><small class="text-info">Last updated on: {{ post.updated_at|date:"F j, Y, g:i a" }}</small></p>
+        {% endif %}
+    </div>
 
-            {% if post.updated_at and post.updated_at > post.created_at %}
-                <p><small class="text-muted">Last updated on: {{ post.updated_at|date:"F j, Y, g:i a" }}</small></p>
-            {% endif %}
-        </div>
+    <hr class="my-4">
 
-        <hr>
-
-        <!-- Comments Section -->
-        <h4 class="mt-4">Comments</h4>
+    <!-- Comments Section -->
+    <div class="comments-section mb-4">
+        <h5>Comments</h5>
         {% if not post.comments.all %}
             <p>No comments yet. Be the first to leave one!</p>
         {% else %}
-            <div class="comments">
+            <div class="list-group">
                 {% for comment in post.comments.all %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ comment.name }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ comment.created_at|date:"F j, Y, g:i a" }}</h6>
-                            <p class="card-text">{{ comment.body }}</p>
-                        </div>
+                    <div class="list-group-item">
+                        <h5 class="mb-1">{{ comment.name }}</h5>
+                        <p class="mb-1">{{ comment.body }}</p>
+                        <small class="text-muted">{{ comment.created_at }}</small>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
-
-
-        <hr>
-
-        <!-- Back Button --><a href="{% url 'blogger_home' %}" class="btn btn-outline-primary mt-4">Back to Blog</a>
-
     </div>
+
+    <!-- Back Button (Standard one at the bottom) -->
+    <div class="text-center">
+        <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-dark">
+            Back to Blog
+        </a>
+    </div>
+</div>
 {% endblock %}

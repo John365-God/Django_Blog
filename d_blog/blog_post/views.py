@@ -18,6 +18,15 @@ class Home(ListView):
 class Details(DetailView):
     model = Post
     template_name = 'details.html'
+    #To get the current page so the viewer can go to it after reading the details instead of the homepage.
+    def get_context_data(self, **kwargs):
+        # Get the context from the parent class
+        context = super().get_context_data(**kwargs)
+
+        # Get the 'next' parameter from the GET request, which will hold the current page
+        context['next_page'] = self.request.GET.get('next', None)
+
+        return context
 
 class AddPost(CreateView):
     model = Post

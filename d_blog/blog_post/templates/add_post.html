@@ -12,7 +12,7 @@
         <div class="form-group">
             <form method="POST">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form}}
                 <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
                 <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Post</button>
             </form>
