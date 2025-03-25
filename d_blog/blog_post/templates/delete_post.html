@@ -1,31 +1,50 @@
 {% extends 'layout.html' %}
+
 {% block title %}
-    <title>Delete blog</title>
+    <title>Delete Blog</title>
 {% endblock %}
 
 {% block body %}
     {% if user.is_authenticated %}
         {% if user.id == post.author.id %}
 
-            <h1>Delete this Blog</h1>
-            <h3>{{ post.title }}</h3>
-            <br>
+        <!-- Main Container -->
+        <div class="container d-flex justify-content-center align-items-center min-vh-90"> <!-- Centering the form like in Register -->
 
-            <div class="form-group">
-                <form method="POST">
-                    {% csrf_token %}
-                    <strong>Delete post? </strong>
-                    <button type="submit" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Yes</button>
+            <form method="POST" style="width: 100%; max-width: 800px; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <h1 class="text-center" style="color: #dc3545;">Delete Blog</h1>
+                <h3 class="text-center">{{ post.title }}</h3>
+                <br>
 
-                    <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">No</a>
-                </form>
-            </div>
+                {% csrf_token %}
+
+                <!-- Confirmation Text -->
+                <div class="text-center mb-3">
+                    <strong>Are you sure you want to delete this post?</strong>
+                </div>
+
+                <div class="text-center">
+                    <!-- Yes button -->
+                    <button type="submit" class="btn btn-danger" style="width: 100px; margin-right: 10px;">Yes</button>
+                     <!-- No button (Cancel action) -->
+<a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" id="backButton" class="btn btn-outline-secondary" style="width: 100px;">No    </a>
+
+
+                </div>
+            </form>
+
+        </div>
 
         {% else %}
-            <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+            <!-- Unauthorized access message -->
+            <div class="text-center">
+                <p style="color: #dc3545;">You are not authorized to delete this blog post. <a href="{% url 'blogger_home' %}" style="color: #007bff;">Go Home</a></p>
+            </div>
         {% endif %}
     {% else %}
-        <p>Please log in to manage your blog. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+        <!-- Unauthorized access message for non-authenticated users -->
+        <div class="text-center">
+            <p style="color: #dc3545;">You must be logged in to delete a blog. <a href="{% url 'login' %}" style="color: #007bff;">Login</a></p>
+        </div>
     {% endif %}
 {% endblock %}
-

@@ -6,44 +6,49 @@
 
 {% block body %}
 
-<div class="container d-flex justify-content-center align-items-center min-vh-10">
-    <form method="POST" class="w-100" style="max-width: 250px;">
+<div class="container d-flex justify-content-center align-items-center min-vh-90"> <!-- Adjusted to match register form layout -->
+    <form method="POST" class="w-100" style="max-width: 300px; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;"> <!-- Same form style as register -->
 
-    <h1 class="text-primary">Log_In</h1>
-    <br>
-    <div class="form-group">
+        <h1 class="text-center" style="color: #5bc0de;">Log In</h1><br/> <!-- Matching heading style -->
 
-{% for message in messages %}
-    {% if message %}
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
-{% endfor %}
+        {% for message in messages %}
+            {% if message %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+        {% endfor %}
 
         {% csrf_token %}
 
-        <div class="row g-3 align-items-center">
-            <div class="col-12">
-                <div class="mb-3">
-                    <input type="text" class="form-control form-control-sm" name="username" placeholder="Username">
+        <div class="form-group">
+            <div class="row g-3 align-items-center">
+
+                <div class="col-12">
+                    <!-- Username Input -->
+                    <div class="mb-1">
+                        <input type="text" class="form-control form-control-sm" name="username" placeholder="Username">
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-12">
-                <div class="mb-3">
-                    <input type="password" class="form-control form-control-sm" name="password" placeholder="Password">
-                    <p>Not a blogger? <a href="{% url 'register' %}" class="text-primary">Register.</a></p>
+                <div class="col-12">
+                    <!-- Password Input -->
+                    <div class="mb-3">
+                        <input type="password" class="form-control form-control-sm" name="password" placeholder="Password">
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary">Log In</button>
-            </div>
+                <a href="{% url 'register' %}" style="color: #5bc0de; text-decoration: none;"><p class="text-center">Not a blogger? Register.</p> </a>
 
-            <div class="col-12 text-center">
-                <a href="{% url 'blogger_home' %}" class="btn btn-outline-primary">Cancel</a>
+                <div class="col-12 text-center d-flex justify-content-center gap-3">
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Log In</button>
+
+                    <!-- Cancel Button with styling -->
+                    <a href="{% url 'blogger_home' %}" class="btn btn-outline-primary" style="color: #007bff; border-color: #007bff;">Cancel</a>
+                </div>
+
             </div>
         </div>
     </form>

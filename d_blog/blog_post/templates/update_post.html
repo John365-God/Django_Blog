@@ -1,33 +1,58 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>Edit blog</title>
+    <title>Edit Blog</title>
 {% endblock %}
-
 
 {% block body %}
     {% if user.is_authenticated %}
         {% if user.id == post.author.id %}
 
-            <h1>Edit Here!</h1>
-            <form method="POST">
+        <!-- Main Container -->
+        <div class="container d-flex justify-content-center align-items-center min-vh-90"> <!-- Centering the form like in Register -->
+
+            <form method="POST" style="width: 100%; max-width: 800px; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"> <!-- Form styling with max width of 800px -->
+                <h1 class="text-center" style="color: #007bff;">Edit Blog</h1>
+
                 {% csrf_token %}
-                {{ form.as_p }}
 
-                <!-- Delete button (Anchor tag for proper link) -->
-                <a href="{% url 'delete' post.pk %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Delete</a>
+                <!-- Title Field -->
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="id_title" name="title" value="{{ post.title }}" required>
+                </div>
 
-                <!-- Update button (Submit the form) -->
-                <button type="submit" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Update</button>
+                <!-- Content Field -->
+                <div class="mb-3">
+                    <label for="id_content" class="form-label">Content</label>
+                    <textarea class="form-control" id="id_content" name="content" rows="5" required>{{ post.content }}</textarea>
+                </div>
 
-                <!-- Cancel button (Anchor tag for redirection) -->
-                <a href="{% url 'blogger_home' %}" class="btn btn-sm btn-outline-info"> Cancel</a>
+                <div class="text-center">
+                    <!-- Buttons styled with consistent theme -->
+
+                    <!-- Delete button -->
+                    <a href="{% url 'delete' post.pk %}" class="btn btn-outline-danger">Delete</a>
+
+                    <!-- Update button (Submit) -->
+                    <button type="submit" class="btn btn-success">Update</button>
+
+                    <!-- Cancel button (No button) -->
+                    <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-info">Cancel</a>
+                </div>
             </form>
+        </div>
 
         {% else %}
-            <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+            <!-- Unauthorized access message -->
+            <div class="text-center">
+                <p style="color: #dc3545;">You are not authorized to edit this blog. <a href="{% url 'blogger_home' %}" style="color: #007bff;">Go Home</a></p>
+            </div>
         {% endif %}
     {% else %}
-        <p>Don't be that guy, do the right thing. <a href="{% url 'blogger_home' %}"> Go Home!</a></p>
+        <!-- Unauthorized access message for non-authenticated users -->
+        <div class="text-center">
+            <p style="color: #dc3545;">You must be logged in to edit a blog. <a href="{% url 'login' %}" style="color: #007bff;">Login</a></p>
+        </div>
     {% endif %}
 {% endblock %}

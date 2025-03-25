@@ -10,10 +10,10 @@
     <div class="text-center mb-4">
         <h1>{{ post.title }}</h1>
         <div class="text-muted">
-             <!-- Back Button (Aligned with the title) -->
-            <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-dark position-absolute start-0 top-1 m-3" style="font-size: 1rem; border: none;">
-                <i class="bi bi-arrow-left-circle"></i>
-            </a>
+         <!-- Back Button (Fixed position at the top-left corner) -->
+        <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-dark position-fixed start-0 top-1 m-3" style="font-size: 1rem; border: none;">
+            <i class="bi bi-arrow-left-circle"></i>
+        </a>
 
             <small class="text-success">Posted by <strong>{{ post.author }}</strong> on {{ post.created_at|date:"F j, Y, g:i a" }}</small>
         </div>
@@ -49,9 +49,10 @@
 
     <!-- Back Button (Standard one at the bottom) -->
     <div class="text-center">
-        <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" class="btn btn-outline-dark">
-            Back to Blog
-        </a>
-    </div>
+    <a href="{% if next_page %}{{ next_page }}{% else %}{% url 'blogger_home' %}{% endif %}" id="backButton" class="btn btn-outline-dark shadow-sm">
+        Back to Blog
+    </a>
+</div>
+
 </div>
 {% endblock %}

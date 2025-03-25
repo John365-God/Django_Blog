@@ -16,6 +16,7 @@
     <!-- Bootstrap JS Bundle (including Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
     <!-- Auto-dismiss Alerts -->
     <script>
         window.addEventListener('DOMContentLoaded', function () {
@@ -75,6 +76,43 @@ function scrollToTop() {
             behavior: 'smooth'
         });
     }
+</script>
+
+    <script>
+    // Function to generate a random color
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Function to add the glowing effect on the outline every 10 seconds
+    function randomGlowEffect() {
+        const button = document.getElementById("backButton");
+
+        setInterval(function () {
+            // Random color generation for the outline
+            const randomColor = getRandomColor();
+
+            // Apply the outline color using inline style (for the glow effect)
+            button.style.outline = `2px solid ${randomColor}`; // Outline color with a thickness of 4px
+
+            // Apply a glowing effect using box-shadow to simulate the glow
+            button.style.boxShadow = `0 0 10px 3px ${randomColor}`; // Box shadow for the glow effect
+
+            // Remove the glow effect after 2 second (to let the glow complete)
+            setTimeout(function() {
+                button.style.boxShadow = 'none'; // Remove the shadow
+                button.style.outline = 'none'; // Remove the outline
+            }, 2000);  // 2 second for the glow effect
+        }, 8000);  // 8 seconds interval
+    }
+
+    // Start the random glow effect when the page loads
+    window.onload = randomGlowEffect;
 </script>
 </head>
 

@@ -21,7 +21,7 @@
     {% if page_obj.number == 1 %}
     <div class="hero-section container-fluid d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #000;">
         <div class="text-center text-white">
-            <h1 class="fw-bold d-inline">Welcome to D-blog</h1>
+            <h1 class="fw-bold d-inline text-primary" >Welcome to D-blog</h1>
             <br><br>
             <a href="javascript:void(0)" id="scrollToBlogButton" onclick="scrollToBlog()" class="text-light text-decoration-none ms-2" style="font-size: 1rem; cursor: pointer;">
                 Check out our Blogs <i class="bi bi-arrow-down-circle"></i>
@@ -50,8 +50,8 @@
                 {% if user.is_authenticated %}
                     {% if user.id == post.author.id %}
                         <!-- Edit and Delete buttons only show for the author -->
-                        <a href="{% url 'update' post.pk %}" class="btn btn-outline-secondary btn-sm w-100 mx-1">Edit</a>
-                        <a href="{% url 'delete' post.pk %}" class="btn btn-outline-danger btn-sm w-100 mx-1">Delete</a>
+                        <a href="{% url 'update' post.pk %}?next={{ request.get_full_path }}" class="btn btn-outline-secondary btn-sm w-100 mx-1">Edit</a>
+                        <a href="{% url 'delete' post.pk %}?next={{ request.get_full_path }}" class="btn btn-outline-danger btn-sm w-100 mx-1">Delete</a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -59,7 +59,6 @@
     </div>
     {% endfor %}
 </div>
-
 
     <!-- Pagination -->
     <nav class="mt-5">
@@ -69,7 +68,6 @@
                     <a class="page-link bg-white text-dark" href="?page=1">First</a>
                 </li>
                 <li class="page-item">
-<!--                    Get the current page so it can be returned to after reading the details-->
                     <a class="page-link bg-white text-dark" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                 </li>
             {% endif %}

@@ -1,32 +1,38 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>Create blog</title>
+    <title>Create Blog</title>
 {% endblock %}
-
 
 {% block body %}
     {% if user.is_authenticated %}
-        <h1>Add Post Here!</h1>
-    <br
-        <div class="form-group">
-            <form method="POST">
+        <div class="container d-flex justify-content-center align-items-center min-vh-90">
+            <form method="POST" style="width: 100%; max-width: 800px; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
+                <h1 class="text-center" style="color: #5bc0de;">Add Post Here!</h1><br/>
+
                 {% csrf_token %}
-                {{form}}
-                <a href="{% url 'blogger_home' %}" class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Cancel</a>
-                <button class="btn" style="background-color: transparent; color: #28a745; border: 2px solid #28a745;">Post</button>
+                {{ form }}
+
+                <!-- Hidden input for the author -->
+                <input type="hidden" name="author" id="author" value="">
+
+                <div class="col-12 text-center d-flex justify-content-center gap-5 mt-4">
+                    <!-- Cancel Button with styling -->
+                    <a href="{% url 'blogger_home' %}" class="btn btn-outline-primary">Cancel</a>
+
+                    <!-- Post Button with styling -->
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
             </form>
         </div>
- <script>
-    var name = "{{ user.id }}";
-    document.getElementById("editor").value = name;
-</script>
 
-{% else %}
-Don't be that guy, do the right thing.
+        <script>
+            // JavaScript to automatically set the 'author' field with the logged-in user's ID
+            var author = "{{ user.id }}";
+            document.getElementById("author").value = author;
+        </script>
 
-{% endif %}
-
-
-
+    {% else %}
+        <p>Don't be that guy, do the right thing.</p>
+    {% endif %}
 {% endblock %}
