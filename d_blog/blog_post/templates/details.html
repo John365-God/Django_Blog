@@ -33,15 +33,19 @@
     <div class="comments-section mb-4">
         <h5>Comments</h5>
         {% if not post.comments.all %}
-            <p>No comments yet. Be the first to leave one!</p>
+           <a href="{% url 'add_comments' pk=post.pk %}"> <p>No comments yet. Be the first to leave one! </p></a>
         {% else %}
+        <a href="{% url 'add_comments' pk=post.pk %}">Add a comment</a>
             <div class="list-group">
                 {% for comment in post.comments.all %}
-                    <div class="list-group-item">
-                        <h5 class="mb-1">{{ comment.name }}</h5>
-                        <p class="mb-1">{{ comment.body }}</p>
-                        <small class="text-muted">{{ comment.created_at }}</small>
-                    </div>
+                   <div class="list-group-item">
+                <div class="d-flex align-items-center">
+                    <h5 class="mb-1">{{ comment.name }}</h5>
+                    <small class="text-muted"> {{ comment.commented_at }}</small>
+                </div>
+                <p class="mb-1">{{ comment.body }}</p>
+            </div>
+
                 {% endfor %}
             </div>
         {% endif %}

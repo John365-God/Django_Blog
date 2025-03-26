@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Add Comment</title>
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-90">
+        <form method="POST" style="width: 100%; max-width: 800px; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #333;">
+            <h1 class="text-center" style="color: #007bff;">Add Comment</h1><br/>
+
+            {% csrf_token %}
+
+            <!-- Comment Field -->
+            <div class="mb-3">
+                <input type="hidden" name="name" id="name" value="">
+                <br>
+                <label for="id_body" class="form-label text-white">Your Comment</label>
+                {{ form.body }}
+            </div>
+
+            <div class="text-center">
+                <!-- Cancel button -->
+                <a href="{% url 'blogger_home' %}" class="btn btn-outline-info">Cancel</a>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-success">Submit Comment</button>
+            </div>
+        </form>
+    </div>
+{% else %}
+    <a href="{% url 'login' %}" style="color: #007bff; text-decoration: none; display: block; text-align: center;">Login to comment!</a>
+{% endif %}
+
+<script>
+    // JavaScript to automatically set the 'author' field with the logged-in user's ID
+    {% if user.is_authenticated %}
+        document.getElementById("name").value = "{{ user.id }}";
+    {% endif %}
+</script>
+
+{% endblock %}
+This should auto add my name: adminde2 to my post.

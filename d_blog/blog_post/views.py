@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy,reverse
-from .models import Post
-from .forms import PostForm
-from django.views.generic import ListView
+from .models import Post, Comments
+from .forms import PostForm,CommentForm
+import random
 
 # Create your views here.
 
@@ -63,4 +63,18 @@ class DeletePost(DeleteView):
         context['next_page'] = self.request.GET.get('next', self.success_url)
 
         return context
+
+
+class AddComment(CreateView):
+    model = Comments
+    form_class = CommentForm
+    template_name = 'comment.html'
+    success_url = reverse_lazy('blogger_home')
+
+    def form_valid(self, form):
+        # Set the 'name' field to the logged-in user's name automatically
+        form.instance.name = self.request.user
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+
 
